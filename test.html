@@ -1,0 +1,59 @@
+<html>
+
+
+
+<script>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyDo2NaFtlExof9qxqoes--rCmprKDICycw",
+    authDomain: "ajax-w14.firebaseapp.com",
+    databaseURL: "https://ajax-w14.firebaseio.com",
+    projectId: "ajax-w14",
+    storageBucket: "ajax-w14.appspot.com",
+    messagingSenderId: "745856199458",
+    //appId: "1:745856199458:web:3817fd1e0eeb3f9d13d37b",
+    //measurementId: "G-M70SBELXVG"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  //firebase.analytics();
+</script>
+var db = firebase.database();
+function writeUserData(userId, name, email, webUrl) {
+	// 這個例子是會創一個 users 的 collection
+	db.ref('/users/' + userId).set({
+		username: name,
+	    email: email,
+	    personal_website: webUrl
+	})
+	.then(function () {alert("建立成功");})
+	.catch(function () {alert("伺服器發生錯誤，請稍後再試");});
+}
+//writeUserData(1, 'Gary', 'gary@nutc.edu.tw', 'http://gary.tw')
+//writeUserData(2, 'Jason', 'jason@nutc.edu.tw', 'http://jason.tw')
+</script>
+
+<script>
+function readUserData(userId) {
+	db.ref('/users/' + userId).once('value', function (snapshot) {
+		var data = snapshot.val();
+	    console.log(data);
+	});
+}
+</script>
+
+<body>
+	<button onclick="writeUserData(1, 'Gary', 'gary@nutc.edu.tw', 'http://gary.tw')"> write</button>
+	<button onclick="readUserData(1)"> read</button>
+</body>
+
+
+</html>
